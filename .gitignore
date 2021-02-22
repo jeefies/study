@@ -1,0 +1,10 @@
+bin
+lib
+pkg
+*.out
+*.a
+*.so
+*.dll
+*.swp
+*.swo
+__pycache__

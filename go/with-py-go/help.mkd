@@ -1,0 +1,21 @@
+# Share Functions for python and golang
+
+How?
+==========
+**We all know that go can build as a c file, use `go build -buildmode=c-share -o lib.extention gofile` to build.**  
+**However, extension can be _dll_ on _Windows_, _dylib_ on _MacOS_, _so_ on _Linux_ or _Unix_ like systems.**  
+
+- - -
+Usage in python
+====================
+**Because python can use `ctype` to load the c-share libraries.**  
+**We can load the library by `LoadLibrary(libraryname)`**  
+**All in all, almost every library can be loaded by `ctypes.cdll.LoadLibrary`**  
+**Also we can use**  
+- `ctypes.pydll.LoadLibrary`  
+- `ctypes.windll.LoadLibrary`  
+- `ctypes.oledll.LoadLibrary`  
+
+- - -
+___More, see the file under the folder___
+__Libs are under folder 'lib', Codes are under folder 'src'__
