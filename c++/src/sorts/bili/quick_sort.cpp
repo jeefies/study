@@ -1,3 +1,4 @@
+// Quick Sort
 #include <iostream>
 #include <vector>
 
@@ -5,13 +6,44 @@ using namespace std;
 
 vector<int> list;
 vector<int> sort(vector<int> list);
+vector<int> quickSort(vector<int> li, int begin, int end);
 void printvec(vector<int> li);
 
 vector<int> sort(vector<int> list) {
-	vector<int> res;
-
-	return res;
+	return quickSort(list, 0, list.size() - 1);
 };
+
+vector<int> quickSort(vector<int> li, int begin, int end) {
+	if (end <= begin) {return li;}
+
+	int l = begin, r = end;
+	int temp = li[begin];
+
+	while (true) {
+		while (li[r] >= temp) {
+			if (r == l) {goto ok;}
+			r--;
+		}
+
+		while (li[l] <= temp) {
+			if (r == l) {goto ok;}
+			l++;
+		}
+		int _temp = li[l];
+		li[l] = li[r];
+		li[r] = _temp;
+	}
+	ok:
+	li[begin] = li[l];
+	li[l] = temp;
+
+	if (end - begin == 1) {return li;}
+
+	li = quickSort(li, begin, l - 1);
+	li = quickSort(li, l + 1, end);
+
+	return li;
+}
 
 int main() {
 	FILE * rfile = fopen("unsort.txt", "r");

@@ -8,9 +8,17 @@ vector<int> sort(vector<int> list);
 void printvec(vector<int> li);
 
 vector<int> sort(vector<int> list) {
-	vector<int> res;
+	for (int i = 0; i < list.size() - 1; i++) {
+		for (int j = 0; j < list.size() -1 - i; j++) {
+			int l = list[j], r = list[j + 1];
+			if (l > r) {
+				list[j + 1] = l;
+				list[j] = r;
+			}
+		}
+	}
 
-	return res;
+	return list;
 };
 
 int main() {
