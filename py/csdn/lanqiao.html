@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2021蓝桥杯初中组6月比赛试题</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p></p><div class="toc"><h3>蓝桥杯初中python试题</h3><ul><li><a href="#_1">编程题</a></li><ul><li><a href="#_6">自我评价</a></li><li><a href="#_1_13">题目 1</a></li><li><a href="#_2_25">题目 2</a></li><li><a href="#_3_52">题目 3</a></li><li><a href="#_4_67">题目 4</a></li><li><a href="#_5_102">题目 5</a></li><li><a href="#_6_155">题目 6</a></li></ul></ul></div><p></p>
+<h1><a id="_1"></a>编程题</h1>
+<p>作者：Jeefy，xsh_Fu<br>
+邮箱：jeefy163@163.com / jeefyol@outlook.com<br>
+github: jeefies@github.com</p>
+<blockquote>
+<p>源代码都在文章之中，仅供参考</p>
+</blockquote>
+<h2><a id="_6"></a>自我评价</h2>
+<blockquote>
+<p>对于我这个初二的初中生来说还是很简单的<br>
+3道比较常规的题和3道算法题（也不完全是）</p>
+</blockquote>
+<p>总而言之，每一个的思路都比较清晰，运算方法是我所能想到最好的方法了。<br>
+题目都是从考试试题上抄下来的，没有改动。</p>
+<h2><a id="_1_13"></a>题目 1</h2>
+<p>给定N个数字（包含整数和浮点数），找到N个数字中最大的数字。所给数字以英文逗号分割。<br>
+<strong>分析</strong> :<br>
+<em>利用内置max函数实现寻找最大值</em><br>
+<em>在最后判断是否应该以整数形式输出</em>。</p>
+<pre><code class="prism language-python"><span class="token comment"># 先把所有数字转为浮点型</span>
+m <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">float</span><span class="token punctuation">,</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 用除以1的余数判断是否要转为整数输出</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>m <span class="token keyword">if</span> m <span class="token operator">%</span> <span class="token number">1</span> <span class="token keyword">else</span> <span class="token builtin">int</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h2><a id="_2_25"></a>题目 2</h2>
+<p>给定一个合数N，将N分解质因数后，输出其质因数个数。<br>
+<strong>分析</strong> :<br>
+<em>分解质因数可以参考短除法的实现方式，一个一个数从小到大一个一个除</em></p>
+<blockquote>
+<p>补充：当一个数已经没有了比N小的质因数时，这个数便不会被任何一个小于N<sup>2</sup>的合数整除</p>
+</blockquote>
+<pre><code class="prism language-python">i <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">def</span> <span class="token function">count</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token comment"># _i 作为 i 的副本，因为之后 i 会被改变</span>
+	<span class="token comment"># n 为结果个数</span>
+	<span class="token comment"># m 为除数，质数从2开始（1既不是合数，也不是质数）</span>
+	_i<span class="token punctuation">,</span> n<span class="token punctuation">,</span> m <span class="token operator">=</span> i<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span>
+	<span class="token comment"># 其实更好的是 m &lt; math.ceil(math.sqrt(_i)) + 1</span>
+	<span class="token comment"># 但是没有太大必要，除非很注重速度</span>
+	<span class="token keyword">while</span> m <span class="token operator">&lt;</span> _i<span class="token punctuation">:</span>
+		<span class="token keyword">if</span> i <span class="token operator">%</span> m <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span> 
+			<span class="token comment"># 能被一个质数整除</span>
+			i <span class="token operator">/=</span> m
+			n <span class="token operator">+=</span> <span class="token number">1</span>
+			<span class="token comment"># 再次看看能否被这个数整除</span>
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			<span class="token comment"># 不能被整除，下一个树</span>
+			m <span class="token operator">+=</span> <span class="token number">1</span>
+	<span class="token keyword">return</span> n
+</code></pre>
+<h2><a id="_3_52"></a>题目 3</h2>
+<p>给定一个含有字母和数字的字符串，输出此字符串中最长的<mark>数字子串</mark>的长度。<br>
+如：字符串“a2a22d”，最长的数字子串为22，长度为2，故输出2。字符串“lq12h567j765”，最长的数字子串为567和765，长度都为3，故输出3。<br>
+<strong>分析</strong> :<br>
+<em>其实可以用正则表达式来寻找所有数字子串</em><br>
+<em>恰巧可以用内置re库实现</em></p>
+<pre><code class="prism language-python"><span class="token keyword">import</span> re
+<span class="token comment"># 寻找数字连续出现的子串</span>
+li <span class="token operator">=</span> re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">"\d+"</span><span class="token punctuation">,</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 将每一个子串变成其长度，利用max寻找最大值</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">max</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">,</span> li<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h2><a id="_4_67"></a>题目 4</h2>
+<p>给定一个大于2的偶数，在所有满足<mark>可以由两个质数相加得到</mark>这个特点的质数对中，找出两个质数差值<mark>最小</mark>的一对，并将差值输出。<br>
+（差值为大数减小数的值，两个质数相等时差值为0）<br>
+<strong>分析</strong>:<br>
+<em>两数相加相等，求差最小，所以从中间开始，向两边找满足是质数的两个数</em></p>
+<pre><code class="prism language-python"><span class="token keyword">import</span> math
+
+<span class="token keyword">def</span> <span class="token function">check</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token comment"># 判断是否是质数</span>
+    m <span class="token operator">=</span> math<span class="token punctuation">.</span>ceil<span class="token punctuation">(</span>math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token comment">#由于range是后闭环，所以必须要+1才能取到最大的到</span>
+    <span class="token comment"># 如果想要偷懒，把m换成i就行，与第2题类似</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> m<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> i <span class="token operator">%</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token boolean">False</span>
+    <span class="token keyword">return</span> <span class="token boolean">True</span>
+
+<span class="token keyword">def</span> <span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token comment"># 获得差为0或1的最中间的两个数</span>
+	<span class="token comment"># left 永远小于 right</span>
+    left <span class="token operator">=</span> i <span class="token operator">//</span> <span class="token number">2</span>
+    right <span class="token operator">=</span> i <span class="token operator">-</span> left
+    <span class="token comment"># 循环直到 left = 2</span>
+    <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> left<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> check<span class="token punctuation">(</span>left<span class="token punctuation">)</span> <span class="token keyword">and</span> check<span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> right <span class="token operator">-</span> left
+        left <span class="token operator">-=</span> <span class="token number">1</span>
+        right <span class="token operator">+=</span> <span class="token number">1</span>
+
+    <span class="token keyword">return</span> i <span class="token operator">-</span> <span class="token number">1</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>get<span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h2><a id="_5_102"></a>题目 5</h2>
+<p>孙悟空的金箍棒可以变高也可以变矮还可以变出多个金箍棒。<br>
+这天孙悟空无聊变出了N个长短不一的金箍棒，这些金箍棒之间相互吵闹，攀比谁高。<br>
+当孙悟空每次手指其中一个金箍棒时，这个金箍棒高度不变，其他的金箍棒高度都会增加1。<br>
+只有当所有金箍棒高度都一样时，他们之间才不相互吵闹，也不会再增加高度，保持静止。</p>
+<p>分别给定N个金箍棒的初始高度，请你帮助孙悟空计算一下至少手指几次可以让N个金箍棒高度都一样。</p>
+<p>例如: 有3个金箍棒，初始高度分别为2，3，4。<br>
+第一次手指第三个金箍棒，第三个金箍棒高度不变，第一和第二个金箍棒高度分别增加1，变为3，4，4；<br>
+第二次手指第二个金箍棒，第二个金箍棒高度不变，第一和第三个金箍棒高度分别增加1，变为4，4，5；<br>
+第三次手指第三个金箍棒，第三个金箍棒高度不变，第一和第二个金箍棒高度分别增加1，变为5，5，5；<br>
+这时3个金箍棒的高度都为5，手指3次后金箍棒高度一样。所以至少手指3次才能使金箍棒高度都一样。</p>
+<p>输入描述<br>
+输入N个非全部相等的正整数（N个数不全部相等，2&lt;N&lt;31）<br>
+且之间以英文逗号隔开，分别表示N个金箍棒的初始高度</p>
+<p>输出描述<br>
+输出一个正整数，表示至少手指几次才能使金箍棒高度都一样</p>
+<p><strong>分析</strong>:<br>
+<em>实际上就是给你一组数字，每一次操作都可以让一个数之外的所有数字加一（<mark>或者可以看成让一个数减一</mark>）</em><br>
+<em>多少次操作之后，可以让整个数组相同</em><br>
+<em>所以我们的思路就是让所有数减少，到<mark>最小数</mark>的大小</em></p>
+<pre><code class="prism language-python">li <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+m <span class="token operator">=</span> <span class="token builtin">min</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span>
+count <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span> <span class="token operator">-</span> m <span class="token operator">*</span> <span class="token builtin">len</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>count<span class="token punctuation">)</span>
+</code></pre>
+<p>这是思路理的<mark>非常</mark>清楚后的代码。</p>
+<p>或者我们可以按照相对常规一点的思路（还是像我说的一样，可以看作让一个数减少</p>
+<pre><code class="prism language-python">li <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> <span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+li<span class="token punctuation">.</span>sort<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># 从小到大排序</span>
+
+n <span class="token operator">=</span> <span class="token number">0</span> <span class="token comment"># 最后的结果</span>
+<span class="token keyword">def</span> <span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    li<span class="token punctuation">[</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-=</span> <span class="token number">1</span>
+    
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>li<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    x <span class="token operator">=</span> li<span class="token punctuation">[</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">-</span> li<span class="token punctuation">[</span>i<span class="token punctuation">]</span> 
+    <span class="token comment"># 把每一个都变成上一个数所需要x次操作</span>
+    <span class="token comment"># 然后就实际操作</span>
+    <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span> add<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    n <span class="token operator">+=</span> x
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+</code></pre>
+<h2><a id="_6_155"></a>题目 6</h2>
+<p>首先在指定坐标的方格内放置红色的花卉（每个方格放一盆）<br>
+在（<mark>100x100</mark>）的坐标系之中<br>
+完成后，找出最多有多少盆红色花卉在同一条直线上。<br>
+（同一直线包含同一列、同一行、同一对角线，红色花卉可以连续也可以不连续）</p>
+<p>输入描述<br>
+输入n对正整数，每一对正整数之间以一个空格隔开，<br>
+代表放置红色花卉的方格位置。每对正整数中的两个数字以英文逗号隔开</p>
+<p>输出描述<br>
+输出最多有多少盆红色花卉在同一条直线上</p>
+<p><strong>分析</strong>:<br>
+<em>这个东西啊，我确实不知道应该如何快速实现，不过这个操作非常简单，所以我们只需要<mark>硬算</mark>就可以了</em></p>
+<pre><code class="prism language-python">matrix <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">0</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token keyword">for</span> _ <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+
+<span class="token keyword">def</span> <span class="token function">proc</span><span class="token punctuation">(</span>stri<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token comment"># 把输入的坐标变成1</span>
+    <span class="token keyword">def</span> <span class="token function">put</span><span class="token punctuation">(</span>strin<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x<span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> strin<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment"># 注意下标与坐标之间相差1</span>
+        matrix<span class="token punctuation">[</span>y <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>x <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">for</span> p <span class="token keyword">in</span> stri<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        put<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">result</span><span class="token punctuation">(</span>matrix<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    m <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token comment"># 首先是横向寻找最大</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token comment"># 再是竖着寻找（一列一列的）</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token comment"># 接下来是斜着</span>
+    <span class="token comment"># 这两个循环是向左倾斜</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>i <span class="token operator">+</span> x<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">99</span> <span class="token operator">-</span> x<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">-</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span><span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>i <span class="token operator">-</span> x<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token comment"># 剩下两个是向右倾斜</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span> <span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>i <span class="token operator">+</span> x<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">-</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token builtin">sum</span> <span class="token punctuation">(</span>matrix<span class="token punctuation">[</span>i <span class="token operator">+</span> x<span class="token punctuation">]</span><span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">100</span> <span class="token operator">-</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> s <span class="token operator">&gt;</span> m<span class="token punctuation">:</span>
+            m <span class="token operator">=</span> s
+    <span class="token comment"># 最后的结果就出来了</span>
+    <span class="token keyword">return</span> m
+
+<span class="token comment"># 处理输入到坐标数组之中，数组初始所有为0</span>
+<span class="token comment"># 只有有东西的地方为1</span>
+proc<span class="token punctuation">(</span><span class="token builtin">input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment"># 最后的结果</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>result<span class="token punctuation">(</span>matrix<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<p>以上皆为我个人解题思路，不代表标准答案。仅供参考。</p>
+<p>转载请注明出处</p>
+</div>
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+// Selection Sort
 #include <iostream>
 #include <vector>
 
@@ -8,7 +9,19 @@ vector<int> sort(vector<int> list);
 void printvec(vector<int> li);
 
 vector<int> sort(vector<int> list) {
-	vector<int> res;
+	vector<int> res(list.begin(), list.end());
+
+	for (int i = 0; i < list.size(); i++) {
+		int temp = res[i], min = i;
+		for (int j = i+1; j < list.size(); j++) {
+			if (res[j] < temp) {
+				temp = res[j];
+				min = j;
+			}
+		}
+		res[min] = res[i];
+		res[i] = temp;
+	}
 
 	return res;
 };

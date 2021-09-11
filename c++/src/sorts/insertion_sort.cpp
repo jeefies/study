@@ -1,3 +1,4 @@
+// Insertion Sort
 #include <iostream>
 #include <vector>
 
@@ -8,9 +9,23 @@ vector<int> sort(vector<int> list);
 void printvec(vector<int> li);
 
 vector<int> sort(vector<int> list) {
-	vector<int> res;
+	for (int i = 1; i < list.size(); i++) {
+		int temp = list[i];
+		for (int j = i - 1; j >= 0; j--) {
+			if (list[j] <= temp) {
+				list.insert(list.begin() + j + 1, temp);
+				list.erase(list.begin() + i + 1);
+				goto next;
+			}
+		}
+		
+		list.insert(list.begin(), temp);
+		list.erase(list.begin() + i + 1);
+		next:
+		continue;
+	}
 
-	return res;
+	return list;
 };
 
 int main() {
