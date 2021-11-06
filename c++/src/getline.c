@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char * mgetline(const char * pre) {
+struct String {
+	int length;
+	char * text;
+};
+typedef struct String String;
+
+String mgetline(const char * pre) {
 	if (pre != NULL) printf(pre);
 	char * line = (char *)malloc(sizeof(char) * 5);
 	char buf;
@@ -16,11 +22,13 @@ char * mgetline(const char * pre) {
 			line = (char *)realloc(line, sizeof(char) * count);
 		}
 	}
-	return line;
+
+	String str = {p, line};
+	return str;
 
 }
 
 int main() {
-	char * line = mgetline("please enter your name:");
-	return printf("Hello %s!\n", line);
+	String line = mgetline("please enter your name:");
+	return printf("Hello %s!\n", line.text);
 }
