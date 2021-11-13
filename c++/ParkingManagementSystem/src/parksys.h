@@ -34,7 +34,7 @@ struct Users {
 	Person ** user;
 	int length;
 };
-extern struct Users user;
+extern struct Users users;
 
 // definations for parking lot
 struct Place {
@@ -66,6 +66,9 @@ void init_users();
 Person * new_person(const char * name, const char * uni_id, const char * phonenumber);
 Person * get_person_byname(const char * name);
 void print_person_info(Person * user);
+void takeup_place(Place * p);
+void leave_place(Place * p);
+Place * get_place_random(int car_type);
 
 // to combine users and parking lot submodules together
 void __parkin(Person * user, int car_type, int x, int y, int z); // z is only used in parking cars

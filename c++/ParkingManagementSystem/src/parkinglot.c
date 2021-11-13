@@ -74,7 +74,7 @@ char * get_place_name(Place * p) {
 					(buf = floordiv(i, 30)) + 1,
 					i - buf + 1
 					);
-			return "";
+			return name;
 	}
 	printf("No such type\n");
 	return "";
@@ -88,11 +88,11 @@ void takeup_place(Place * p) {
 		case PLACE_EBIKE:
 			parkinglot.frees[12 * 12 * 5 + (p->id >> 2)] = -1;
 			break;
-		case PLACE_NBKIE:
+		case PLACE_NBIKE:
 			parkinglot.frees[12 * 12 * 5 + 30 * 2 + (p->id >> 2)] = -1;
 			break;
 	}
-	p->available = IN;
+	p->avaliable = IN;
 }
 
 void leave_place(Place * p) {
@@ -103,10 +103,11 @@ void leave_place(Place * p) {
 		case PLACE_EBIKE:
 			parkinglot.frees[12 * 12 * 5 + (p->id >> 2)] = p->id;
 			break;
-		case PLACE_NBKIE:
+		case PLACE_NBIKE:
 			parkinglot.frees[12 * 12 * 5 + 30 * 2 + (p->id >> 2)] = p->id;
 			break;
 	}
+	p->avaliable = NOT_IN;
 }
 
 Place * get_place_random(int car_type) {
@@ -122,22 +123,21 @@ Place * get_place_random(int car_type) {
 				return NULL;
 			}
 		};
-		Place * p = parkinglot.frees[i];
-		takeup_place(p);
+		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	} else if (car_type == PLACE_EBIKE) {
 		int i = (randint = rand() % (30 * 2) + 12 * 12 * 5);
-		while (parkingloa.frees[i] == -1) {
+		while (parkinglot.frees[i] == -1) {
 			i++;
-			// if (i >= 12 * 12 * 5 + 30 * 2) {
-			if (i >= 780)
+			// if (i >= 12 * 12 * 5 + 30 * 2) {}
+			if (i >= 780) {
 				i = 720; // 12 * 12 * 5
 			}
 			if (randint == i) {
 				return NULL;
 			}
 		};
-		Place * p = parkinglot.frees[i];
+		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	} else {
 		// PLACE_NBKIE
@@ -145,14 +145,14 @@ Place * get_place_random(int car_type) {
 		while (parkinglot.frees[i] == -1) {
 			i++;
 			// if (i >= 12 * 12 * 5 + 30 * 2 + 30 * 4) {
-			if (i >= 900)
+			if (i >= 900) {
 				i = 780; // 12 * 12 * 5
 			}
 			if (randint == i) {
 				return NULL;
 			}
 		};
-		Place * p = parkinglot.frees[i];
+		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	}
 }
