@@ -49,6 +49,7 @@ struct ParkingLot {
 	Place * cars;
 	Place * ebike;
 	Place * nbike;
+	int * frees;
 };
 extern struct ParkingLot parkinglot;
 
@@ -67,4 +68,6 @@ Person * get_person_byname(const char * name);
 void print_person_info(Person * user);
 
 // to combine users and parking lot submodules together
-void parkin(Person * user, int car_type, int x, int y, int z); // z is only used in parking cars
+void __parkin(Person * user, int car_type, int x, int y, int z); // z is only used in parking cars
+void _parkin(Person * user, Place * p);
+void parkin(Person * user, int);
