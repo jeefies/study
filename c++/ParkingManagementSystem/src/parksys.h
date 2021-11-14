@@ -50,6 +50,7 @@ struct ParkingLot {
 	Place * ebike;
 	Place * nbike;
 	int * frees;
+	int free_counts[3];
 };
 extern struct ParkingLot parkinglot;
 
@@ -60,15 +61,16 @@ void init_parkinglot();
 Place * get_place_byid(int id);
 // remember to free the pointer after use, it's allocated by malloc
 char * get_place_name(Place * p); 
+void print_parking_status();
+void takeup_place(Place * p);
+void leave_place(Place * p);
+Place * get_place_random(int car_type);
 
 // for submodule users
 void init_users();
 Person * new_person(const char * name, const char * uni_id, const char * phonenumber);
 Person * get_person_byname(const char * name);
 void print_person_info(Person * user);
-void takeup_place(Place * p);
-void leave_place(Place * p);
-Place * get_place_random(int car_type);
 
 // to combine users and parking lot submodules together
 void __parkin(Person * user, int car_type, int x, int y, int z); // z is only used in parking cars

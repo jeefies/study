@@ -16,6 +16,9 @@ void init_parkinglot() {
 	parkinglot.ebike = (Place *)malloc(PLACES * 30 * 2);
 	parkinglot.nbike = (Place *)malloc(PLACES * 30 * 4);
 	parkinglot.frees = (int *)malloc(sizeof(int) * (12 * 12 * 5 + 30 * 6));
+	parkinglot.free_counts[PLACE_CAR] = 12 * 12 * 5;
+	parkinglot.free_counts[PLACE_EBIKE] = 30 * 2;
+	parkinglot.free_counts[PLACE_NBIKE] = 30 * 4;
 
 	int fi = 0;
 	int id;
@@ -59,20 +62,20 @@ char * get_place_name(Place * p) {
 		case PLACE_CAR:
 			sprintf(name, "Car parks at floor %d col %d row %d",
 					(buf = floordiv(i, 12 * 12)) + 1, // floor
-					(buf += floordiv(i - buf, 12)) + 1, // col
-					(i - buf) + 1 // row
+					(buf = floordiv(i, 12) - buf * 12) + 1, // col
+					(i % 12) + 1 // row
 				);
 			return name;
 		case PLACE_EBIKE:
 			sprintf(name, "Bike with charge parks at col %d row %d\n",
 					(buf = floordiv(i, 30)) + 1,
-					i - buf + 1
+					i - buf * 30 + 1
 					);
 			return name;
 		case PLACE_NBIKE:
 			sprintf(name, "Bike without charge parks at col %d row %d\n",
 					(buf = floordiv(i, 30)) + 1,
-					i - buf + 1
+					i - buf * 30 + 1
 					);
 			return name;
 	}
@@ -92,6 +95,12 @@ void takeup_place(Place * p) {
 			parkinglot.frees[12 * 12 * 5 + 30 * 2 + (p->id >> 2)] = -1;
 			break;
 	}
+	if (parkinglot.free_counts[p->id & 0b11] <= 0) {
+		fprintf(stderr, "No enough place was left\n");
+		return;
+	}
+	parkinglot.free_counts[p->id & 0b11] -= 1;
+
 	p->avaliable = IN;
 }
 
@@ -107,12 +116,13 @@ void leave_place(Place * p) {
 			parkinglot.frees[12 * 12 * 5 + 30 * 2 + (p->id >> 2)] = p->id;
 			break;
 	}
+	parkinglot.free_counts[p->id & 0b11] += 1;
 	p->avaliable = NOT_IN;
 }
 
 Place * get_place_random(int car_type) {
 	int randint;
-	if (car_type == CAR) {
+	if (car_type == PLACE_CAR) {
 		int i = (randint = rand() % (12 * 12 * 5));
 		while (parkinglot.frees[i] == -1) {
 			i++;
@@ -123,6 +133,7 @@ Place * get_place_random(int car_type) {
 				return NULL;
 			}
 		};
+		printf("Rand ok %d\n", i);
 		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	} else if (car_type == PLACE_EBIKE) {
@@ -140,7 +151,7 @@ Place * get_place_random(int car_type) {
 		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	} else {
-		// PLACE_NBKIE
+		// PLACE_NBIKE
 		int i = (randint = rand() % (30 * 4) + 780); // 12 * 12 * 5 + 30 * 2
 		while (parkinglot.frees[i] == -1) {
 			i++;
@@ -155,4 +166,17 @@ Place * get_place_random(int car_type) {
 		Place * p = get_place_byid(parkinglot.frees[i]);
 		return p;
 	}
+}
+
+void print_parking_status() {
+	int c, eb, nb;
+	c = parkinglot.free_counts[PLACE_CAR];
+	eb = parkinglot.free_counts[PLACE_EBIKE];
+	nb = parkinglot.free_counts[PLACE_NBIKE];
+
+	printf(	"All places left: %d\n"
+		"\tCar place left: %d\n"
+		"\tBike with an electrical recharge plug left: %d\n"
+		"\tBike without an electrical recharge plug left: %d\n",
+		c + eb + nb, c, eb, nb);
 }

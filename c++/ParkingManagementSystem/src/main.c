@@ -107,12 +107,16 @@ int main() {
 	printf( // Print Help message first
 			"Parking Management System Cli\n"
 			"Made By jeefy, sources see github.com/jeefies/study/tree/master/c++/ParkingManagementSystem\n"
-			"Help at methods:\n"
-			"\tadd: add a new person in\n"
+			"Help at managers methods:\n"
+			"Parking operations:\n"
 			"\tpark: select a person and park his car or bike in\n"
 			"\tleave: select a person and move his car out\n"
-			"\tperson: select a person and print his infomation\n"
+			"Personnal operations:\n"
+			"\tadd: add a new person in\n"
+			"\tperson: select a person and print his infomation, including parkng status\n"
 			"\tlist: list all registered users\n"
+			"Parking lot operations:\n"
+			"\tstatus: view current car-park occupation and number of free spaces\n"
 	      );
 	while (1) {
 		// BUG could not read more than 50 characters
@@ -143,7 +147,7 @@ int main() {
 
 			char * cartype;
 			int type;
-__parkcar2:
+__parkcar:
 			printf("What's your car type ? [car or bike]: ");
 			cartype = readline(NULL);
 			if (strcmp(cartype, "car") == 0) {
@@ -163,8 +167,9 @@ __parkcar2:
 				free(cartype);
 			} else {
 				printf("Unknow car type, please enter again\n");
-				goto __parkcar2;
+				goto __parkcar;
 			}
+			printf("Car type : %d\n", type);
 
 			parkin(p, type);
 
@@ -172,7 +177,7 @@ __parkcar2:
 
 		} else if (strcmp(input, "leave") == 0) {
 			Person * p = ask_person();
-			if (p->status != NOT_IN) {
+			if (p->status != IN) {
 				printf("You don't have to leave\n");
 				continue;
 			}
@@ -190,6 +195,8 @@ __parkcar2:
 						users.user[i]->name, users.user[i]->uni_id, users.user[i]->phone
 					);
 			}
+		} else if (strcmp(input, "status") == 0) {
+			print_parking_status();
 		}
 
 	}
