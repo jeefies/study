@@ -6,8 +6,6 @@ sounds
 system
 SDL_sources
 
-dart
-
 *.out
 *.o
 *.a
@@ -25,11 +23,11 @@ dart
 *.mp4
 *.wav
 *.jpg
+*.jpeg
+*.xbm
+*.bmp
 
 *.pyc
 *.class
-*.dart
 
-./py/stdtkinter/calculator
-./c++/src/sdl2/splayer/mt
 __pycache__
