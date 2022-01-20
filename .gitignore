@@ -31,3 +31,5 @@ SDL_sources
 *.class
 
 __pycache__
+
+study/tcl/libcurl/*.tcl
