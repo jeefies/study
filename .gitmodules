@@ -1,0 +1,3 @@
+[submodule "tcl/with-tk/rpi-imager/tcurl"]
+	path = tcl/with-tk/rpi-imager/tcurl
+	url = https://github.com/jeefies/tcurl.git

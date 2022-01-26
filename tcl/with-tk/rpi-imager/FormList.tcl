@@ -1,4 +1,7 @@
 package require Tk
+
+source WgetWin.tcl
+
 set DEV 0
 
 font create Name -size 12 -weight bold
@@ -46,12 +49,13 @@ proc showList {title ctx {x 200} {y 200}} {
 	pack [frame $main -bg white -bd 0]
 	$wrapper create window 0 0 -window $main -anchor nw
 
-	set size [expr {[llength $ctx] / 2}]
+	set size [expr {[llength $ctx] / 3}]
 
 	set index -1
 	for {set i 0} {$i < $size} {incr i} {
 		packOne $main $i [lindex $ctx [incr index]] [lindex $ctx [incr index]]
 		sepLine $main $i
+		bindDownload $main $i [lindex $ctx [incr index]]
 	}
 	packOne $main $i [lindex $ctx [incr index]] [lindex $ctx [incr index]]
 
@@ -103,4 +107,15 @@ proc sepLine {parent index} {
 	set n $parent.l$index
 	frame $n -bg black -height 2
 	pack $n -fill x -padx 10
+}
+
+proc bindDownload {parent index url} {
+	set n $parent.f$index
+
+	foreach ch [winfo children $n] {
+		bind $ch "<Button-1>" "catch {destroy .dltop};
+			toplevel .dltop;\
+			wm title .dltop Download;\
+			getUrlPBar .dltop $url"
+	}
 }

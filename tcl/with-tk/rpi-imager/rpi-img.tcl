@@ -79,14 +79,24 @@ bind .down.bsys "<Button-1>" {chooseOS}
 
 
 set systemContent {
-	{Raspberry Pi OS (32-bit)} {A port of DEBIAN Bullseye with the Raspberry Pi Desktop (Recommened)}
-	{Raspberry Pi OS (other)} {Other Raspberry Pi OS based images}
-	{Other general purpose OS} {Other general purpose Operating Systems}
-	{Media player - Kodi OS} {Kodi based Media player Operating Systems}
-	{Emulation and game OS} {Emalators for running retro-computing platforms}
-	{Other specific purpose OS} {Thin clients, digit signage and 3D printers OS}
-	{Other language-specific OS} {Operating systems specifically tailored for particular langauges}
-	{Misc utility images} {Bootloader EEPROM configuration, etc.}
+	{Raspberry Pi OS (32-bit)} {A port of DEBIAN Buster with the Raspberry Pi Desktop (Recommened)}
+	https://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/raspios_armhf/images/raspios_armhf-2021-05-28/2021-05-07-raspios-buster-armhf.zip
+	{Raspberry Pi OS (64-bit)} {The same with above, but for 64-bits}
+	https://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/raspios_arm64/images/raspios_arm64-2021-05-28/2021-05-07-raspios-buster-arm64.zip
+	{RaspiOS (lite 32-bit)} {A tiny version of Raspios, without any desktop environment}
+	https://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/raspios_lite_armhf/images/raspios_lite_armhf-2021-05-28/2021-05-07-raspios-buster-armhf-lite.zip
+	{RaspiOS (lite 64-bit)} {The same as above, buf for 64-bit}
+	https://mirrors.tuna.tsinghua.edu.cn/raspberry-pi-os-images/raspios_lite_arm64/images/raspios_lite_arm64-2021-05-28/2021-05-07-raspios-buster-arm64-lite.zip
+	{Chromium OS} {A Chromiun version from FydeOS in github.com}
+	https://github.com/FydeOS/chromium_os-raspberry_pi/releases/download/r92/chromiumos_image_r92r1-rpi4b.img.xz
+	{Manjaro Mate} {Manjaro linux system with mate desktop}
+	https://mirrors.tuna.tsinghua.edu.cn/osdn/storage/g/m/ma/manjaro-arm/rpi4/mate/20.12.1/Manjaro-ARM-mate-rpi4-20.12.1.img.xz
+	{Fedora Lite} {Fedora linux system without desktop environment installed}
+	https://mirrors.tuna.tsinghua.edu.cn/fedora-altarch/releases/34/Spins/aarch64/images/Fedora-Minimal-34-1.2.aarch64.raw.xz
+	{OpenEular UKUI} {A Chinese system created by huawei, with UKUI desktop}
+	https://isrc.iscas.ac.cn/eulixos/repo/others/openeuler-raspberrypi/images/openEuler-20.03-LTS-SP1-UKUI-raspi-aarch64-alpha2.img.xz
+	{OpenEular DDE} {The same as above, but with DDE desktop environment}
+	https://isrc.iscas.ac.cn/eulixos/repo/others/openeuler-raspberrypi/images/openEuler-20.03-LTS-SP1-DDE-raspi-aarch64-alpha2.img.xz
 	{擦除} {格式化SD卡为FAT32格式}
 	{使用自定义镜像} {使用下载的系统文件镜像文件烧录}
 }
