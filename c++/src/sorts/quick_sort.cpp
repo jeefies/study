@@ -5,47 +5,38 @@
 using namespace std;
 
 vector<int> list;
-vector<int> sort(vector<int> list);
-vector<int> quickSort(vector<int> list, int begin, int end);
-void printvec(vector<int> li);
 
-vector<int> sort(vector<int> list) {
-	cout << "sort begin" << endl;
-	vector<int> result = quickSort(list, 0, list.size() - 1);
-	cout << "sort ok" << endl;
-	return result;
+void printvec(vector<int> & li) {
+	for (int i = 0; i < li.size() - 1; i++) {
+		cout << li[i] << ",";
+	}
+	cout << li[li.size() - 1] << endl;
 }
 
-vector<int> quickSort(vector<int> list, int begin, int end) {
-	if (begin == end) {
-		return list;
+void quickSort(vector<int> & list, int begin, int end) {
+	if (begin + 1 >= end) {
+		return;
 	}
-	int lp = begin, rp = end;
-	int temp = list[begin];
-	while (true) {
-		if (lp == rp) {break;}
-		while (list[rp] >= temp) {
-			rp--;
-			if (lp == rp) {goto ok;}
+
+	int l = begin, r = end - 1, key = list[begin];
+	while (l < r) {
+		while (l < r && list[r] >= key) {
+			r--;
 		}
-		while (list[lp] <= temp) {
-			lp++;
-			if (lp == rp) {goto ok;}
+		list[l] = list[r];
+
+		while (l < r && list[l] <= key) {
+			l++;
 		}
-		if (lp == rp) {break;}
-		int _t = list[rp];
-		list[rp] = list[lp];
-		list[lp] = _t;
+		list[r] = list[l];
 	}
-	ok:
-	if (lp == begin) {
-		return list;
-	}
-	list[begin] = list[rp];
-	list[rp] = temp;
-	list = quickSort(list, begin, rp);
-	list = quickSort(list, rp + 1, end);
-	return list;
+	list[l] = key;
+	quickSort(list, begin, l);
+	quickSort(list, l + 1, end);
+}
+
+void quickSort(vector<int> & list) {
+	quickSort(list, 0, list.size());
 }
 
 int main() {
@@ -61,21 +52,16 @@ int main() {
 		fscanf(rfile, "%d ", &i);
 		list.push_back(i);
 	}
+	
 	printvec(list);
 
-	vector<int> sorted = sort(list);
+	quickSort(list);
 
 	FILE * wfile = fopen("sorted.txt", "w");
-	for (int i = 0; i < sorted.size(); i++) {
-		fprintf(wfile, "%d ", sorted[i]);
+	for (int i = 0; i < list.size(); i++) {
+		fprintf(wfile, "%d ", list[i]);
 	}
-	printvec(sorted);
+	printvec(list);
 	return 0;
 }
 
-void printvec(vector<int> li) {
-	for (int i = 0; i < li.size() - 1; i++) {
-		cout << li[i] << ",";
-	}
-	cout << li[li.size() - 1] << endl;
-}

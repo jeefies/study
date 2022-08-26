@@ -4,28 +4,19 @@
 
 using namespace std;
 
-vector<int> list;
-vector<int> sort(vector<int> list);
-void printvec(vector<int> li);
-
-vector<int> sort(vector<int> list) {
-	for (int i = 1; i < list.size(); i++) {
-		int temp = list[i];
-		for (int j = i - 1; j >= 0; j--) {
-			if (list[j] <= temp) {
-				list.insert(list.begin() + j + 1, temp);
-				list.erase(list.begin() + i + 1);
-				goto next;
-			}
-		}
-		
-		list.insert(list.begin(), temp);
-		list.erase(list.begin() + i + 1);
-		next:
-		continue;
+void printvec(vector<int> li) {
+	for (int i = 0; i < li.size() - 1; i++) {
+		cout << li[i] << ",";
 	}
+	cout << li[li.size() - 1] << endl;
+}
 
-	return list;
+void insertionSort(vector<int> & nums) {
+	for (int i = 0; i < nums.size(); i++) {
+		for (int j = i; j > 0 && nums[j] < nums[j - 1]; --j) {
+			swap(nums[j], nums[j - 1]);
+		}
+	}
 };
 
 int main() {
@@ -35,27 +26,22 @@ int main() {
 		cout << "Could Not Read any datas" << endl;
 		return 1;
 	}
-
+	
+	vector<int> nums;
 	while (!feof(rfile)) {
 		int i;
 		fscanf(rfile, "%d ", &i);
-		list.push_back(i);
+		nums.push_back(i);
 	}
-	printvec(list);
+	printvec(nums);
 
-	vector<int> sorted = sort(list);
+	insertionSort(nums);
 
-	printvec(sorted);
+	printvec(nums);
 	FILE * wfile = fopen("sorted.txt", "w");
-	for (int i = 0; i < sorted.size(); i++) {
-		fprintf(wfile, "%d ", sorted[i]);
+	for (int i = 0; i < nums.size(); i++) {
+		fprintf(wfile, "%d ", nums[i]);
 	}
 	return 0;
 }
 
-void printvec(vector<int> li) {
-	for (int i = 0; i < li.size() - 1; i++) {
-		cout << li[i] << ",";
-	}
-	cout << li[li.size() - 1] << endl;
-}
